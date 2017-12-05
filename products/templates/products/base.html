@@ -1,0 +1,104 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shop Online</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+<!--Less styles -->
+
+
+
+
+<!-- Bootstrap style -->
+    <link id="callCss" rel="stylesheet" href="{% static '/products/style.css' %}" media="screen"/>
+    <link href="{% static '/products/base.css' %}" rel="stylesheet" media="screen"/>
+<!-- Bootstrap style responsive -->
+	<link href="{% static '/products/style-responsive.css' %}" rel="stylesheet"/>
+	<link href="{% static '/products/font-awesome.css' %}" rel="stylesheet" type="text/css">
+<!-- Google-code-prettify -->
+	<link href="{% static '/products/prettify.css' %}" rel=" stylesheet"/>
+<!-- fav and touch icons -->
+    <link rel="shortcut icon" href="{% static '/products/image/favicon.ico' %} ">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{% static '/products/image/apple-touch-icon-144-precomposed.png' %}"
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{% static '/products/image/apple-touch-icon-114-precomposed.png' %}"
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{% static '/products/image/apple-touch-icon-72-precomposed.png' %} "
+    <link rel="apple-touch-icon-precomposed" href="{% static '/products/image/apple-touch-icon-57-precomposed.png' %} "
+	<style type="text/css" id="enject"></style>
+</head>
+<body>
+
+<div id="header">
+<div class="container">
+<div id="welcomeLine" class="row">
+	<div class="span6">Welcome!<strong> {{ user }}</strong></div>
+	<div class="span6">
+
+	</div>
+</div>
+
+
+<!-- Header End====================================================================== -->
+
+
+
+<!-- Navbar ================================================== -->
+<div id="logoArea" class="navbar navbar-inverse navbar-nav">
+<a id="smallScreen" data-target="#topMenu" data-toggle="collapse" class="btn btn-navbar">
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+</a>
+  <div class="navbar-inner">
+    <a class="brand" href="/products"><img src="#" alt="Shop Online"/></a>
+		<form class="form-inline navbar-search" method="get" action='/products/search/' >
+		<input id="srchFld" name="q" class="srchTxt form-control" type="text" placeholder="Search Products" />
+		  <select class="srchTxt">
+			  {% for category in all_category %}
+
+			<option>{{ category.category_name }}</option>
+			{% endfor %}
+		</select>
+		  <button type="submit" value="search" id="submitButton" class="btn btn-primary">Go</button>
+    </form>
+    <ul id="topMenu" class="nav pull-right">
+	 <li class=""><a href="special_offer.html">Specials Offer</a></li>
+	 <li class=""><a href="normal.html">Delivery</a></li>
+	 <li class=""><a href="contact.html">Contact</a></li>
+
+
+		{% if request.user.is_authenticated %}
+		<a href="/products/logout/" role="button" data-toggle="modal" style="padding-right:0"><span class="btn btn-large btn-success" style="margin-top:10px;">Logout</span></a>
+		{% else %}
+		<a href="/products/login/" role="button" data-toggle="modal" style="padding-right:0; "><span class="btn btn-large btn-success" style="margin-top:10px;">Login
+	 </span>
+	 </a>
+		{% endif %}
+	<div id="login" class="modal hide fade in" tabindex="-1" role="dialog" aria-labelledby="login" aria-hidden="false" >
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h3>Login Block</h3>
+		  </div>
+	</div>
+	</li>
+    </ul>
+  </div>
+</div>
+</div>
+</div>
+
+
+
+{% block slider %}
+{% endblock %}
+
+{% block body %}
+{% endblock %}
+</body>
+</html>

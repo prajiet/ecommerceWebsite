@@ -1,0 +1,32 @@
+{% extends 'products/base.html' %}
+
+{% block body %}
+<div class="col-md-8 col-md-offset-2 col-sm-12 maincontent">
+    <div style="text-allign:center; text-decoration:underline"><h3>Your Cart</h3></div>
+    <div class="cart_container">
+        {% for item in orders %}
+
+        <div class="cart_item">
+            <div >
+
+                <span class="title">{{ item.product.product_name }}</span> by {{ item.product.product_brand }}
+
+            </div>
+            <div class="cart_price">
+                <span class="cart_quantity">{{ item.quantity }} x <span class="cart_value">{{ item.product.product_price }}</span> </span>
+                Quantity: <a href="/products/add/{{item.product.id}}/">[+]</a>/<a href="/products/remove/{{item.product.id}}/">[-]</a>
+                <br>
+
+            </div>
+        </div>
+    {% empty %}
+        <div>
+            There are no more items in your cart
+        </div>
+        {% endfor %}
+        <div class="cart_total">
+            <h4>Total: $<span class="cart_value">{{ total }}</span></h4>
+        </div>
+    </div>
+</div>
+{% endblock %}

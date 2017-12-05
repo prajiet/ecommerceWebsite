@@ -1,0 +1,431 @@
+
+
+{% if error_message %}
+<p><strong>{{ error_message }}</strong></p>
+{% endif %}
+
+
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Shop Online</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+<!--Less styles -->
+   <!-- Other Less css file //different less files has different color scheam
+	<link rel="stylesheet/less" type="text/css" href="themes/less/simplex.less">
+	<link rel="stylesheet/less" type="text/css" href="themes/less/classified.less">
+	<link rel="stylesheet/less" type="text/css" href="themes/less/amelia.less">  MOVE DOWN TO activate
+	-->
+	<!--<link rel="stylesheet/less" type="text/css" href="themes/less/bootshop.less">
+	<script src="themes/js/less.js" type="text/javascript"></script> -->
+
+<!-- Bootstrap style -->
+    <link id="callCss" rel="stylesheet" href="{% static '/products/style.css' %}" media="screen"/>
+    <link href="{% static '/products/base.css' %}" rel="stylesheet" media="screen"/>
+<!-- Bootstrap style responsive -->
+	<link href="{% static '/products/style-responsive.css' %}" rel="stylesheet"/>
+	<link href="{% static '/products/font-awesome.css' %}" rel="stylesheet" type="text/css">
+<!-- Google-code-prettify -->
+	<link href="{% static '/products/prettify.css' %}" rel="stylesheet"/>
+<!-- fav and touch icons -->
+    <link rel="shortcut icon" href="themes/images/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="themes/images/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="themes/images/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="themes/images/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="themes/images/ico/apple-touch-icon-57-precomposed.png">
+	<style type="text/css" id="enject"></style>
+  </head>
+<body>
+<div id="header">
+<div class="container">
+<div id="welcomeLine" class="row">
+	<div class="span6">Welcome!<strong>{{ user}}</strong></div>
+	<div class="span6">
+
+	</div>
+</div>
+<!-- Navbar ================================================== -->
+<div id="logoArea" class="navbar navbar-inverse navbar-nav">
+<a id="smallScreen" data-target="#topMenu" data-toggle="collapse" class="btn btn-navbar">
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+</a>
+  <div class="navbar-inner">
+    <a class="brand" href="/products"><img src="#" alt="Shop Online"/></a>
+		<form class="form-inline navbar-search" method="post" action="products.html" >
+		<input id="srchFld" class="srchTxt" type="text" />
+		  <select class="srchTxt">
+			  {% for category in all_category %}
+
+			<option>{{ category.category_name }}</option>
+			{% endfor %}
+		</select>
+		  <button type="submit" id="submitButton" class="btn btn-primary">Go</button>
+    </form>
+    <ul id="topMenu" class="nav pull-right">
+	 <li class=""><a href="special_offer.html">Specials Offer</a></li>
+	 <li class=""><a href="normal.html">Delivery</a></li>
+	 <li class=""><a href="contact.html">Contact</a></li>
+	 <a href="/products/login/" role="button" data-toggle="modal" style="padding-right:0; "><span class="btn btn-large btn-success" style="margin-top:10px;">Login
+	 </span>
+	 </a>
+		<a href="/products/logout/" role="button" data-toggle="modal" style="padding-right:0"><span class="btn btn-large btn-success" style="margin-top:10px;">Logout</span></a>
+	<div id="login" class="modal hide fade in" tabindex="-1" role="dialog" aria-labelledby="login" aria-hidden="false" >
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h3>Login Block</h3>
+		  </div>
+	</div>
+	</li>
+    </ul>
+  </div>
+</div>
+</div>
+</div>
+<!-- Header End====================================================================== -->
+<div id="mainBody">
+	<div class="container">
+	<div class="row">
+<!-- Sidebar ================================================== -->
+	<div id="sidebar" class="span3">
+
+		<div class="well well-small">
+			{% if request.user.is_authenticated %}
+
+			<a id="myCart" href="{% url 'products:cart' %}">
+				Show Cart
+				<span class="badge badge-warning pull-right">
+				</span>
+			</a>
+
+			{% endif %}
+		</div>
+		<ul id="sideManu" class="nav nav-tabs nav-stacked">
+			{% for ca in all_category %}
+						<li class="subMenu open"><a href="/products/{{ ca.pk }} ">{{ca.category_name}}</a> </li>
+						{% endfor %}
+
+		<br/>
+		</ul>
+
+
+			<div class="thumbnail">
+				<img src="themes/images/payment_methods.png" title="Bootshop Payment Methods" alt="Payments Methods">
+				<div class="caption">
+				  <h5>Payment Methods</h5>
+				</div>
+			  </div>
+	</div>
+<!-- Sidebar end=============================================== -->
+	<div class="span9">
+    <ul class="breadcrumb">
+		<li><a href="/products/">Home</a> <span class="divider">/</span></li>
+		<li class="active">Products Name</li>
+    </ul>
+	<h3> {{ category.category_name }} </h3>
+	<hr class="soft"/>
+	<form class="form-horizontal span6">
+		<div class="control-group">
+		  <label class="control-label alignL">Sort By </label>
+			<select>
+              <option>Priduct name A - Z</option>
+              <option>Priduct name Z - A</option>
+              <option>Priduct Stoke</option>
+              <option>Price Lowest first</option>
+            </select>
+		</div>
+	  </form>
+
+<div id="myTab" class="pull-right">
+ <a href="#listView" data-toggle="tab"><span class="btn btn-large"><i class="icon-list"></i></span></a>
+ <a href="#blockView" data-toggle="tab"><span class="btn btn-large btn-primary"><i class="icon-th-large"></i></span></a>
+</div>
+<br class="clr"/>
+<div class="tab-content">
+	<div class="tab-pane" id="listView">
+		<div class="row">
+			<div class="span2">
+				<img src="themes/images/products/3.jpg" alt=""/>
+			</div>
+			<div class="span4">
+				<h3>New | Available</h3>
+				<hr class="soft"/>
+				<h5>ojhadsoihdaodjs</h5>
+				<p>
+				{{ category.category_description }}
+				</p>
+				<a class="btn btn-small pull-right" href="product_details.html">View Details</a>
+				<br class="clr"/>
+			</div>
+			<div class="span3 alignR">
+			<form class="form-horizontal qtyFrm">
+			<h3> $140.00</h3>
+			<label class="checkbox">
+				<input type="checkbox">  Adds product to compair
+			</label><br/>
+
+			  <a href="product_details.html" class="btn btn-large btn-primary"> Add to <i class=" icon-shopping-cart"></i></a>
+			  <a href="product_details.html" class="btn btn-large"><i class="icon-zoom-in"></i></a>
+
+				</form>
+			</div>
+		</div>
+		<hr class="soft"/>
+		<div class="row">
+			<div class="span2">
+				<img src="themes/images/products/1.jpg" alt=""/>
+			</div>
+			<div class="span4">
+				<h3>New | Available</h3>
+				<hr class="soft"/>
+				<h5>{{category.category_name}} </h5>
+				<p>
+				Nowadays the lingerie industry is one of the most successful business spheres.We always stay in touch with the latest fashion tendencies -
+				that is why our goods are so popular..
+				</p>
+				<a class="btn btn-small pull-right" href="product_details.html">View Details</a>
+				<br class="clr"/>
+			</div>
+			<div class="span3 alignR">
+			<form class="form-horizontal qtyFrm">
+				<h3> $140.00</h3>
+				<label class="checkbox">
+				<input type="checkbox">  Adds product to compair
+				</label><br/>
+
+				<a href="product_details.html" class="btn btn-large btn-primary"> Add to <i class=" icon-shopping-cart"></i></a>
+				<a href="product_details.html" class="btn btn-large"><i class="icon-zoom-in"></i></a>
+
+			</form>
+			</div>
+		</div>
+		<hr class="soft"/>
+		<div class="row">
+			<div class="span2">
+				<img src="themes/images/products/3.jpg" alt=""/>
+			</div>
+			<div class="span4">
+				<h3>New | Available</h3>
+				<hr class="soft"/>
+				<h5>Product Name </h5>
+				<p>
+				Nowadays the lingerie industry is one of the most successful business spheres.We always stay in touch with the latest fashion tendencies -
+				that is why our goods are so popular..
+				</p>
+				<a class="btn btn-small pull-right" href="product_details.html">View Details</a>
+				<br class="clr"/>
+			</div>
+			<div class="span3 alignR">
+			<form class="form-horizontal qtyFrm">
+				<h3> $140.00</h3>
+				<label class="checkbox">
+					<input type="checkbox">  Adds product to compair
+				</label><br/>
+
+				  <a href="product_details.html" class="btn btn-large btn-primary"> Add to <i class=" icon-shopping-cart"></i></a>
+				  <a href="product_details.html" class="btn btn-large"><i class="icon-zoom-in"></i></a>
+
+			</form>
+			</div>
+		</div>
+		<hr class="soft"/>
+		<div class="row">
+			<div class="span2">
+				<img src="themes/images/products/3.jpg" alt=""/>
+			</div>
+			<div class="span4">
+				<h3>New | Available</h3>
+				<hr class="soft"/>
+				<h5>Product Name </h5>
+				<p>
+				Nowadays the lingerie industry is one of the most successful business spheres.We always stay in touch with the latest fashion tendencies -
+				that is why our goods are so popular..
+				</p>
+				<a class="btn btn-small pull-right" href="product_details.html">View Details</a>
+				<br class="clr"/>
+			</div>
+			<div class="span3 alignR">
+				<form class="form-horizontal qtyFrm">
+				<h3> $140.00</h3>
+				<label class="checkbox">
+				<input type="checkbox">  Adds product to compair
+				</label><br/>
+
+				<a href="product_details.html" class="btn btn-large btn-primary"> Add to <i class=" icon-shopping-cart"></i></a>
+				<a href="product_details.html" class="btn btn-large"><i class="icon-zoom-in"></i></a>
+
+				</form>
+			</div>
+		</div>
+
+		<hr class="soft"/>
+		<div class="row">
+			<div class="span2">
+				<img src="themes/images/products/3.jpg" alt=""/>
+			</div>
+			<div class="span4">
+				<h3>New | Available</h3>
+				<hr class="soft"/>
+				<h5>Product Name </h5>
+				<p>
+				Nowadays the lingerie industry is one of the most successful business spheres.We always stay in touch with the latest fashion tendencies -
+				that is why our goods are so popular..
+				</p>
+				<a class="btn btn-small pull-right" href="product_details.html">View Details</a>
+				<br class="clr"/>
+			</div>
+			<div class="span3 alignR">
+				<form class="form-horizontal qtyFrm">
+				<h3> $140.00</h3>
+				<label class="checkbox">
+				<input type="checkbox">  Adds product to compair
+				</label><br/>
+				<a href="product_details.html" class="btn btn-large btn-primary"> Add to <i class=" icon-shopping-cart"></i></a>
+				<a href="product_details.html" class="btn btn-large"><i class="icon-zoom-in"></i></a>
+				</form>
+			</div>
+		</div>
+		<hr class="soft"/>
+		<div class="row">
+			<div class="span2">
+				<img src="themes/images/products/3.jpg" alt=""/>
+			</div>
+			<div class="span4">
+				<h3>New | Available</h3>
+				<hr class="soft"/>
+				<h5>Product Name </h5>
+				<p>
+				Nowadays the lingerie industry is one of the most successful business spheres.We always stay in touch with the latest fashion tendencies -
+				that is why our goods are so popular..
+				</p>
+				<a class="btn btn-small pull-right" href="product_details.html">View Details</a>
+				<br class="clr"/>
+			</div>
+			<div class="span3 alignR">
+				<form class="form-horizontal qtyFrm">
+				<h3> $140.00</h3>
+				<label class="checkbox">
+				<input type="checkbox">  Adds product to compair
+				</label><br/>
+
+				<a href="product_details.html" class="btn btn-large btn-primary"> Add to <i class=" icon-shopping-cart"></i></a>
+				<a href="product_details.html" class="btn btn-large"><i class="icon-zoom-in"></i></a>
+
+				</form>
+			</div>
+		</div>
+		<hr class="soft"/>
+	</div>
+
+	<div class="tab-pane  active" id="blockView">
+
+		<ul class="thumbnails" style=" padding:0px;">
+			{% for s in product %}
+
+
+			<li class="span3">
+
+			  <div class="thumbnail" >
+
+
+				<a href="/products/{{ category.pk }}/{{s.pk }}/ "><img src="{{s.product_picture }}" style="height:200px; width:260px;" alt=""/></a>
+				<div class="caption" style="height:100px; ">
+
+
+				  <h5>{{s.product_name }}</h5>
+				  <p>
+					{{ s.product_brand }}
+				  </p>
+				   <h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">&euro;{{s.product_price }}</a></h4>
+				</div>
+
+			  </div>
+			</li>
+			 {% endfor %}
+		  </ul>
+
+	<hr class="soft"/>
+
+	</div>
+</div>
+
+
+	<div class="pagination">
+    <span class="step-links">
+        {% if product.has_previous %}
+            <a href="?page={{ product.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ product.number }} of {{ product.paginator.num_pages }}.
+        </span>
+
+        {% if product.has_next %}
+            <a href="?page={{ product.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+			<br class="clr"/>
+</div>
+</div>
+</div>
+</div>
+<!-- MainBody End ============================= -->
+<!-- Footer ================================================================== -->
+	<div  id="footerSection">
+	<div class="container">
+		<div class="row">
+			<div class="span3">
+				<h5>ACCOUNT</h5>
+				<a href="login.html">YOUR ACCOUNT</a>
+				<a href="login.html">PERSONAL INFORMATION</a>
+				<a href="login.html">ADDRESSES</a>
+				<a href="login.html">DISCOUNT</a>
+				<a href="login.html">ORDER HISTORY</a>
+			 </div>
+			<div class="span3">
+				<h5>INFORMATION</h5>
+				<a href="contact.html">CONTACT</a>
+				<a href="register.html">REGISTRATION</a>
+				<a href="legal_notice.html">LEGAL NOTICE</a>
+				<a href="tac.html">TERMS AND CONDITIONS</a>
+				<a href="faq.html">FAQ</a>
+			 </div>
+			<div class="span3">
+				<h5>OUR OFFERS</h5>
+				<a href="#">NEW PRODUCTS</a>
+				<a href="#">TOP SELLERS</a>
+				<a href="special_offer.html">SPECIAL OFFERS</a>
+				<a href="#">MANUFACTURERS</a>
+				<a href="#">SUPPLIERS</a>
+			 </div>
+			<div id="socialMedia" class="span3 pull-right">
+				<h5>SOCIAL MEDIA </h5>
+				<a href="#"><img width="60" height="60" src="themes/images/facebook.png" title="facebook" alt="facebook"/></a>
+				<a href="#"><img width="60" height="60" src="themes/images/twitter.png" title="twitter" alt="twitter"/></a>
+				<a href="#"><img width="60" height="60" src="themes/images/youtube.png" title="youtube" alt="youtube"/></a>
+			 </div>
+		 </div>
+		<p class="pull-right">&copy; Shop Online</p>
+	</div><!-- Container End -->
+	</div>
+<!-- Placed at the end of the document so the pages load faster ============================================= -->
+	<script src="themes/js/jquery.js" type="text/javascript"></script>
+	<script src="themes/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="themes/js/google-code-prettify/prettify.js"></script>
+
+	<script src="themes/js/bootshop.js"></script>
+    <script src="themes/js/jquery.lightbox-0.5.js"></script>
+
+	<!-- Themes switcher section ============================================================================================= -->
+
+<span id="themesBtn"></span>
+</body>
+</html>

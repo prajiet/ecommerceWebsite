@@ -1,0 +1,35 @@
+{% extends 'products/base.html' %}
+
+{% block body %}
+<div class="tab-pane  active" id="blockView">
+
+		<ul class="thumbnails" style=" padding:0px;">
+			{% for s in p %}
+
+
+			<li class="span3">
+
+			  <div class="thumbnail" >
+
+
+				<a href="/products/{{ p.category.product_set.pk }}/{{s.pk }}/ "><img src="{{s.product_picture }}" style="height:200px; width:260px;" alt=""/></a>
+				<div class="caption" style="height:100px; ">
+
+
+				  <h5>{{s.product_name }}</h5>
+				  <p>
+					{{ s.product_brand }}
+				  </p>
+				   <h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">&euro;{{s.product_price }}</a></h4>
+				</div>
+
+			  </div>
+			</li>
+			 {% endfor %}
+		  </ul>
+
+	<hr class="soft"/>
+
+	</div>
+
+{% endblock %}
